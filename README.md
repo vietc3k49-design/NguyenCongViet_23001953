@@ -22,6 +22,12 @@ Thư mục: [`TH2/`](./TH2/)
 - **[`bai1.php`](./TH2/bai1.php)**: Xây dựng hệ thống giỏ hàng mua sắm (`class CartItem`, `class ShoppingCart`), xử lý thêm/xóa sản phẩm, tính tổng tiền, bắt lỗi dữ liệu đầu vào (giá/số lượng $\le 0$, xóa sản phẩm không tồn tại, giỏ hàng rỗng).
 - **[`bai2.php`](./TH2/bai2.php)**: Quản lý vé xem phim (`class Movie`), xử lý đặt vé, hủy vé, tính doanh thu phim, tìm phim theo ID, tính tổng doanh thu toàn rạp và tìm phim bán chạy nhất (hỗ trợ hiển thị nhiều phim đồng hạng cao nhất). Bắt các trường hợp ngoại lệ theo đề bài.
 
+### 🔹 Thực Hành 3 (TH3): Cơ Sở Dữ Liệu MySQL
+Thư mục: [`TH3/`](./TH3/)
+
+- **[`bai1.sql`](./TH3/bai1.sql)**: Quản lý giỏ hàng (`shopping_cart`, bảng `cart_items`), thực hiện các thao tác tạo bảng, thêm 6 sản phẩm, lọc theo giá/số lượng, sắp xếp, cập nhật giá/số lượng, xóa sản phẩm, tính thành tiền và tổng giá trị giỏ hàng (`SUM`).
+- **[`bai2.sql`](./TH3/bai2.sql)**: Quản lý vé xem phim (bảng `movies`), tính số lượng vé đã bán, tính doanh thu của từng phim, tổng doanh thu toàn rạp (`SUM`) và tìm phim có số vé bán ra nhiều nhất (`MAX`).
+
 ---
 
 ## 🚀 Hướng Dẫn Chạy Bài Tập
