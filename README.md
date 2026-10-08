@@ -28,6 +28,18 @@ Thư mục: [`TH3/`](./TH3/)
 - **[`bai1.sql`](./TH3/bai1.sql)**: Quản lý giỏ hàng (`shopping_cart`, bảng `cart_items`), thực hiện các thao tác tạo bảng, thêm 6 sản phẩm, lọc theo giá/số lượng, sắp xếp, cập nhật giá/số lượng, xóa sản phẩm, tính thành tiền và tổng giá trị giỏ hàng (`SUM`).
 - **[`bai2.sql`](./TH3/bai2.sql)**: Quản lý vé xem phim (bảng `movies`), tính số lượng vé đã bán, tính doanh thu của từng phim, tổng doanh thu toàn rạp (`SUM`) và tìm phim có số vé bán ra nhiều nhất (`MAX`).
 
+### 🔹 Thực Hành 4 (TH4): Ứng Dụng Quản Lý Sản Phẩm (PHP + MySQL + MVC cơ bản)
+Thư mục: [`TH4/`](./TH4/)
+
+- **[`common/dbConnect.php`](./TH4/common/dbConnect.php)**: Kết nối CSDL MySQL bằng PDO, hỗ trợ charset `utf8mb4`, xử lý ngoại lệ `PDOException`.
+- **[`model/product.php`](./TH4/model/product.php)**: Tách lớp nghiệp vụ dữ liệu (`getAllProducts`, `getProductById`, `addProduct`, `updateProduct`, `deleteProduct`) sử dụng Prepared Statements an toàn.
+- **[`product_list.php`](./TH4/product_list.php)**: Hiển thị danh sách sản phẩm dạng bảng (ID, Tên, Giá VNĐ, Số lượng, Chức năng [Sửa], [Xóa] kèm xác nhận `confirm`).
+- **[`product_add.php`](./TH4/product_add.php)**: Form thêm sản phẩm mới kèm kiểm tra dữ liệu đầu vào (Tên không rỗng, Giá > 0, Số lượng >= 0).
+- **[`product_edit.php`](./TH4/product_edit.php)**: Form chỉnh sửa sản phẩm, lấy dữ liệu hiện tại theo ID và cập nhật vào CSDL.
+- **[`product_delete.php`](./TH4/product_delete.php)**: Xử lý xóa sản phẩm theo ID, kiểm tra sự tồn tại của sản phẩm trước khi xóa.
+- **[`index.php`](./TH4/index.php)**: Điều hướng mặc định vào trang danh sách sản phẩm.
+- **[`view/header.php`](./TH4/view/header.php)** & **[`view/footer.php`](./TH4/view/footer.php)**: Template HTML cơ bản dùng chung cho toàn bộ ứng dụng.
+
 ---
 
 ## 🚀 Hướng Dẫn Chạy Bài Tập
@@ -54,13 +66,15 @@ php TH2/bai2.php
    php -S localhost:8000
    ```
 2. Truy cập vào trình duyệt:
+   - `http://localhost:8000/TH1/bai1.php`
    - `http://localhost:8000/TH2/bai1.php`
-   - `http://localhost:8000/TH2/bai2.php`
+   - `http://localhost:8000/TH4/`
 
 #### Cách 2: Sử dụng XAMPP
-1. Mở **XAMPP Control Panel** và bấm **Start** ở module **Apache**.
+1. Mở **XAMPP Control Panel** và bấm **Start** ở module **Apache** và **MySQL**.
 2. Mở trình duyệt và truy cập:
    - `http://localhost/web/TH1/bai1.php`
    - `http://localhost/web/TH2/bai1.php`
-   - `http://localhost/web/TH2/bai2.php`
+   - `http://localhost/web/TH4/` (Quản lý sản phẩm giỏ hàng)
+
 
