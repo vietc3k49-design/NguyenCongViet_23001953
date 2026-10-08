@@ -42,39 +42,68 @@ Thư mục: [`TH4/`](./TH4/)
 
 ---
 
-## 🚀 Hướng Dẫn Chạy Bài Tập
+## 🚀 Hướng Dẫn Chạy Bài Tập Chi Tiết
 
-### 1. Chạy trực tiếp qua dòng lệnh (CLI)
-Mở Terminal tại thư mục gốc `d:\web` và chạy file tương ứng:
-```bash
-# Thực hành 1
-php TH1/bai1.php
-php TH1/bai2.php
-php TH1/bai3.php
-php TH1/bai4.php
+### 1️⃣ Thực Hành 1 (TH1) & Thực Hành 2 (TH2): PHP Cơ Bản & OOP
 
-# Thực hành 2
-php TH2/bai1.php
-php TH2/bai2.php
-```
+Bạn có thể chạy bằng 1 trong 2 cách:
 
-### 2. Chạy trên Trình duyệt Web
+* **Cách 1: Chạy trực tiếp qua dòng lệnh CLI (Nhanh nhất)**
+  Mở Terminal tại thư mục gốc `d:\web` và chạy:
+  ```bash
+  # Chạy bài tập TH1
+  php TH1/bai1.php
+  php TH1/bai2.php
+  php TH1/bai3.php
+  php TH1/bai4.php
 
-#### Cách 1: Sử dụng PHP Built-in Server (Khuyên dùng - Nhanh nhất)
-1. Mở Terminal tại thư mục `d:\web` và chạy:
-   ```bash
-   php -S localhost:8000
-   ```
-2. Truy cập vào trình duyệt:
-   - `http://localhost:8000/TH1/bai1.php`
-   - `http://localhost:8000/TH2/bai1.php`
-   - `http://localhost:8000/TH4/`
+  # Chạy bài tập TH2
+  php TH2/bai1.php
+  php TH2/bai2.php
+  ```
 
-#### Cách 2: Sử dụng XAMPP
-1. Mở **XAMPP Control Panel** và bấm **Start** ở module **Apache** và **MySQL**.
-2. Mở trình duyệt và truy cập:
-   - `http://localhost/web/TH1/bai1.php`
-   - `http://localhost/web/TH2/bai1.php`
-   - `http://localhost/web/TH4/` (Quản lý sản phẩm giỏ hàng)
+* **Cách 2: Chạy trên Trình duyệt Web**
+  * Dùng PHP Server: Chạy `php -S localhost:8000` rồi truy cập `http://localhost:8000/TH1/bai1.php` hoặc `http://localhost:8000/TH2/bai1.php`
+  * Dùng XAMPP: Khởi động Apache rồi truy cập `http://localhost/web/TH1/bai1.php` hoặc `http://localhost/web/TH2/bai1.php`
+
+---
+
+### 2️⃣ Thực Hành 3 (TH3): Cơ Sở Dữ Liệu MySQL
+
+Các bài tập TH3 là file mã nguồn SQL (`.sql`). Để chạy và kiểm tra kết quả truy vấn:
+
+* **Cách 1: Sử dụng phpMyAdmin (Giao diện trực quan)**
+  1. Khởi động module **MySQL** và **Apache** trong XAMPP Control Panel.
+  2. Mở trình duyệt vào địa chỉ: `http://localhost/phpmyadmin/`.
+  3. Chọn tab **SQL** (hoặc tab **Import**).
+  4. Sao chép và dán nội dung từ file [`TH3/bai1.sql`](./TH3/bai1.sql) hoặc [`TH3/bai2.sql`](./TH3/bai2.sql) rồi nhấn nút **Go (Thực hiện)**.
+
+* **Cách 2: Chạy trực tiếp qua MySQL CLI**
+  ```bash
+  mysql -u root -p < TH3/bai1.sql
+  mysql -u root -p < TH3/bai2.sql
+  ```
+
+---
+
+### 3️⃣ Thực Hành 4 (TH4): Ứng Dụng Quản Lý Giỏ Hàng (PHP + MySQL)
+
+Đây là ứng dụng Web CRUD hoàn chỉnh kết hợp PHP và MySQL:
+
+* **Bước 1: Khởi động Dịch vụ**
+  * Mở **XAMPP Control Panel**, nhấn **Start** ở cả 2 module: **Apache** và **MySQL**.
+
+* **Bước 2: Chuẩn bị Cơ sở dữ liệu**
+  * Đảm bảo Database `shopping_cart` và bảng `products` đã được khởi tạo trong MySQL (qua phpMyAdmin hoặc chạy lệnh SQL tạo bảng kèm 5 sản phẩm mẫu).
+
+* **Bước 3: Truy cập vào ứng dụng trên Trình duyệt**
+  * **Cách Khuyên dùng (qua XAMPP)**:
+    👉 Mở trình duyệt vào link: **`http://localhost/web/TH4/`** (hoặc `http://localhost/web/TH4/product_list.php`)
+  * **Cách thay thế (qua PHP Built-in Server)**:
+    Mở Terminal tại `d:\web`, gõ:
+    ```bash
+    php -S localhost:8000
+    ```
+    Sau đó truy cập: **`http://localhost:8000/TH4/`**
 
 
