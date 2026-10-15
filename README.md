@@ -1,109 +1,128 @@
-# BÀI TẬP THỰC HÀNH MÔN PHÁT TRIỂN ỨNG DỤNG WEB
+﻿# BÀI TẬP THỰC HÀNH MÔN PHÁT TRIỂN ỨNG DỤNG WEB
 
-- **Sinh viên thực hiện**: Nguyễn Công Việt
-- **Mã sinh viên**: 23001953
-- **Môn học**: Phát triển ứng dụng Web
+- **Sinh viên:** Nguyễn Công Việt
+- **Mã sinh viên:** 23001953
+- **Công nghệ:** PHP 8.2+, MySQL/MariaDB, PDO, HTML/CSS và JavaScript cơ bản.
 
----
+## Danh mục bài thực hành
 
-## 📚 Danh Mục Các Buổi Thực Hành
+### TH1 — PHP cơ bản, mảng, hàm và OOP
 
-### 🔹 Thực Hành 1 (TH1): PHP Cơ Bản & Lập Trình Hướng Đối Tượng (OOP)
-Thư mục: [`TH1/`](./TH1/)
+- [bai1.php](./TH1/bai1.php): biến, mảng sinh viên, vòng lặp và tính điểm trung bình.
+- [bai2.php](./TH1/bai2.php): tách hàm tính điểm, xếp loại và hiển thị sinh viên.
+- [bai3.php](./TH1/bai3.php): tìm sinh viên tốt nhất/kém nhất, đếm sinh viên đạt và tìm theo tên.
+- [bai4.php](./TH1/bai4.php): lớp Student, constructor, phương thức và mảng đối tượng.
 
-- **[`bai1.php`](./TH1/bai1.php)**: Làm quen với biến, mảng kết hợp lồng nhau và vòng lặp `foreach`, tính điểm trung bình.
-- **[`bai2.php`](./TH1/bai2.php)**: Tách các hàm xử lý độc lập (`calculateAverageScore`, `getRank`, `displayStudent`).
-- **[`bai3.php`](./TH1/bai3.php)**: Xử lý và tìm kiếm danh sách sinh viên (`findBestStudent`, `findWorstStudent`, `countPassedStudents`, `findStudentByName`).
-- **[`bai4.php`](./TH1/bai4.php)**: Chuyển đổi sang Lập trình hướng đối tượng OOP (`class Student`, constructor, methods `getRank`, `isPassed`, `display`, xử lý mảng đối tượng).
+### TH2 — Function và OOP nâng cao
 
-### 🔹 Thực Hành 2 (TH2): PHP – Function & OOP Nâng Cao
-Thư mục: [`TH2/`](./TH2/)
+- [bai1.php](./TH2/bai1.php): CartItem, ShoppingCart; thêm/xóa sản phẩm, tính tổng tiền và kiểm tra dữ liệu.
+- [bai2.php](./TH2/bai2.php): Movie; đặt/hủy vé, doanh thu, tìm phim và phim bán chạy nhất, xử lý ngoại lệ.
 
-- **[`bai1.php`](./TH2/bai1.php)**: Xây dựng hệ thống giỏ hàng mua sắm (`class CartItem`, `class ShoppingCart`), xử lý thêm/xóa sản phẩm, tính tổng tiền, bắt lỗi dữ liệu đầu vào (giá/số lượng $\le 0$, xóa sản phẩm không tồn tại, giỏ hàng rỗng).
-- **[`bai2.php`](./TH2/bai2.php)**: Quản lý vé xem phim (`class Movie`), xử lý đặt vé, hủy vé, tính doanh thu phim, tìm phim theo ID, tính tổng doanh thu toàn rạp và tìm phim bán chạy nhất (hỗ trợ hiển thị nhiều phim đồng hạng cao nhất). Bắt các trường hợp ngoại lệ theo đề bài.
+### TH3 — MySQL
 
-### 🔹 Thực Hành 3 (TH3): Cơ Sở Dữ Liệu MySQL
-Thư mục: [`TH3/`](./TH3/)
+- [bai1.sql](./TH3/bai1.sql): database shopping_cart, bảng cart_items; tạo dữ liệu, lọc, sắp xếp, cập nhật, xóa và tính tổng giá trị giỏ hàng.
+- [bai2.sql](./TH3/bai2.sql): bảng movies; số vé bán, doanh thu từng phim/toàn rạp và tìm phim bán nhiều vé nhất.
 
-- **[`bai1.sql`](./TH3/bai1.sql)**: Quản lý giỏ hàng (`shopping_cart`, bảng `cart_items`), thực hiện các thao tác tạo bảng, thêm 6 sản phẩm, lọc theo giá/số lượng, sắp xếp, cập nhật giá/số lượng, xóa sản phẩm, tính thành tiền và tổng giá trị giỏ hàng (`SUM`).
-- **[`bai2.sql`](./TH3/bai2.sql)**: Quản lý vé xem phim (bảng `movies`), tính số lượng vé đã bán, tính doanh thu của từng phim, tổng doanh thu toàn rạp (`SUM`) và tìm phim có số vé bán ra nhiều nhất (`MAX`).
+### TH4 — Quản lý sản phẩm và tài khoản (tiếp nối trong tuần 5)
 
-### 🔹 Thực Hành 4 (TH4): Ứng Dụng Quản Lý Sản Phẩm (PHP + MySQL + MVC cơ bản)
-Thư mục: [`TH4/`](./TH4/)
+**Bài tuần 5 tiếp tục trong TH4.** Mã nguồn hiện tại nằm trong [TH4/app/](./TH4/app/), không có bài TH5 riêng. Ứng dụng quản lý sản phẩm của hệ thống giỏ hàng, có đăng ký, đăng nhập, đăng xuất và kiểm soát truy cập.
 
-- **[`common/dbConnect.php`](./TH4/common/dbConnect.php)**: Kết nối CSDL MySQL bằng PDO, hỗ trợ charset `utf8mb4`, xử lý ngoại lệ `PDOException`.
-- **[`model/product.php`](./TH4/model/product.php)**: Tách lớp nghiệp vụ dữ liệu (`getAllProducts`, `getProductById`, `addProduct`, `updateProduct`, `deleteProduct`) sử dụng Prepared Statements an toàn.
-- **[`product_list.php`](./TH4/product_list.php)**: Hiển thị danh sách sản phẩm dạng bảng (ID, Tên, Giá VNĐ, Số lượng, Chức năng [Sửa], [Xóa] kèm xác nhận `confirm`).
-- **[`product_add.php`](./TH4/product_add.php)**: Form thêm sản phẩm mới kèm kiểm tra dữ liệu đầu vào (Tên không rỗng, Giá > 0, Số lượng >= 0).
-- **[`product_edit.php`](./TH4/product_edit.php)**: Form chỉnh sửa sản phẩm, lấy dữ liệu hiện tại theo ID và cập nhật vào CSDL.
-- **[`product_delete.php`](./TH4/product_delete.php)**: Xử lý xóa sản phẩm theo ID, kiểm tra sự tồn tại của sản phẩm trước khi xóa.
-- **[`index.php`](./TH4/index.php)**: Điều hướng mặc định vào trang danh sách sản phẩm.
-- **[`view/header.php`](./TH4/view/header.php)** & **[`view/footer.php`](./TH4/view/footer.php)**: Template HTML cơ bản dùng chung cho toàn bộ ứng dụng.
+| Thành phần | Vai trò |
+|---|---|
+| [common/dbConnect.php](./TH4/app/common/dbConnect.php) | Kết nối PDO dùng chung, utf8mb4, xử lý lỗi kết nối |
+| [common/auth.php](./TH4/app/common/auth.php) | Kiểm tra session trước khi truy cập trang quản lý |
+| [model/product.php](./TH4/app/model/product.php) | Năm hàm lấy danh sách, lấy theo ID, thêm, sửa và xóa |
+| [product_list.php](./TH4/app/product_list.php) | Bảng ID, tên, giá, số lượng, liên kết Sửa/Xóa |
+| [product_add.php](./TH4/app/product_add.php) | Form thêm sản phẩm, kiểm tra dữ liệu phía server |
+| [product_edit.php](./TH4/app/product_edit.php) | Điền dữ liệu hiện tại, kiểm tra và cập nhật theo ID |
+| [product_delete.php](./TH4/app/product_delete.php) | Trang xác nhận; xóa qua POST có token |
+| [register.php](./TH4/app/register.php) | Kiểm tra trường trống/tên trùng, băm mật khẩu và đăng ký |
+| [login.php](./TH4/app/login.php) | Xác minh mật khẩu, lưu session, hiển thị thông báo đăng ký |
+| [logout.php](./TH4/app/logout.php) | Xóa session/cookie phiên và về trang đăng nhập |
+| [index.php](./TH4/app/index.php) | Chuyển đến login hoặc danh sách theo trạng thái đăng nhập |
+| [view/header.php](./TH4/app/view/header.php), [view/footer.php](./TH4/app/view/footer.php) | Giao diện chung; hiển thị tài khoản và Đăng xuất |
+| [shopping_cart.sql](./TH4/shopping_cart.sql) | Tạo database, bảng products/users và dữ liệu mẫu |
+| [README riêng](./TH4/README.md) | Hướng dẫn cài đặt và bài nộp |
 
----
+```text
+TH4/
+├── README.md
+├── shopping_cart.sql
+└── app/
+    ├── common/
+    │   ├── dbConnect.php
+    │   └── auth.php
+    ├── model/product.php
+    ├── view/
+    │   ├── header.php
+    │   └── footer.php
+    ├── assets/.gitkeep
+    ├── index.php
+    ├── product_list.php
+    ├── product_add.php
+    ├── product_edit.php
+    ├── product_delete.php
+    ├── register.php
+    ├── login.php
+    └── logout.php
+```
 
-## 🚀 Hướng Dẫn Chạy Bài Tập Chi Tiết
+Các điểm kiểm tra dữ liệu và truy cập:
 
-### 1️⃣ Thực Hành 1 (TH1) & Thực Hành 2 (TH2): PHP Cơ Bản & OOP
+- Tên sản phẩm không rỗng, tối đa 100 ký tự; giá dương, tối đa 2 chữ số thập phân; số lượng là số nguyên không âm. Các giá trị số lượng như `1.5` hoặc `-0.5` bị từ chối.
+- Form giữ dữ liệu khi lỗi. Trang sửa/xóa báo ID sai hoặc sản phẩm không tồn tại có đầy đủ header/footer.
+- GET không xóa dữ liệu; người dùng phải xác nhận bằng form POST có token hợp lệ.
+- Bốn trang sản phẩm đều yêu cầu đăng nhập, kể cả khi gửi POST trực tiếp. Người chưa đăng nhập được chuyển về login.
+- Truy vấn có dữ liệu đầu vào dùng prepared statements; nội dung hiển thị được escape; mật khẩu dùng password_hash/password_verify.
 
-Bạn có thể chạy bằng 1 trong 2 cách:
+## Hướng dẫn chạy
 
-* **Cách 1: Chạy trực tiếp qua dòng lệnh CLI (Nhanh nhất)**
-  Mở Terminal tại thư mục gốc `d:\web` và chạy:
-  ```bash
-  # Chạy bài tập TH1
-  php TH1/bai1.php
-  php TH1/bai2.php
-  php TH1/bai3.php
-  php TH1/bai4.php
+### TH1 và TH2
 
-  # Chạy bài tập TH2
-  php TH2/bai1.php
-  php TH2/bai2.php
-  ```
+Từ thư mục gốc dự án, chạy bằng PHP CLI, ví dụ:
 
-* **Cách 2: Chạy trên Trình duyệt Web**
-  * Dùng PHP Server: Chạy `php -S localhost:8000` rồi truy cập `http://localhost:8000/TH1/bai1.php` hoặc `http://localhost:8000/TH2/bai1.php`
-  * Dùng XAMPP: Khởi động Apache rồi truy cập `http://localhost/web/TH1/bai1.php` hoặc `http://localhost/web/TH2/bai1.php`
+```bash
+php TH1/bai1.php
+php TH2/bai1.php
+```
 
----
+Hoặc chạy `php -S localhost:8000` tại thư mục gốc rồi mở `http://localhost:8000/TH1/bai1.php` hay `http://localhost:8000/TH2/bai1.php`.
 
-### 2️⃣ Thực Hành 3 (TH3): Cơ Sở Dữ Liệu MySQL
+### TH3
 
-Các bài tập TH3 là file mã nguồn SQL (`.sql`). Để chạy và kiểm tra kết quả truy vấn:
+Bật Apache và MySQL trong XAMPP, mở `http://localhost/phpmyadmin/`, nhập file SQL tương ứng trong TH3 qua tab **Import / Nhập** hoặc chạy nội dung trong tab **SQL**.
 
-* **Cách 1: Sử dụng phpMyAdmin (Giao diện trực quan)**
-  1. Khởi động module **MySQL** và **Apache** trong XAMPP Control Panel.
-  2. Mở trình duyệt vào địa chỉ: `http://localhost/phpmyadmin/`.
-  3. Chọn tab **SQL** (hoặc tab **Import**).
-  4. Sao chép và dán nội dung từ file [`TH3/bai1.sql`](./TH3/bai1.sql) hoặc [`TH3/bai2.sql`](./TH3/bai2.sql) rồi nhấn nút **Go (Thực hiện)**.
+### TH4 và phần tiếp nối tuần 5
 
-* **Cách 2: Chạy trực tiếp qua MySQL CLI**
-  ```bash
-  mysql -u root -p < TH3/bai1.sql
-  mysql -u root -p < TH3/bai2.sql
-  ```
+1. Bật **Apache** và **MySQL** trong XAMPP.
+2. Mở `http://localhost/phpmyadmin/`, nhập [TH4/shopping_cart.sql](./TH4/shopping_cart.sql).
+3. Kiểm tra [dbConnect.php](./TH4/app/common/dbConnect.php): host `localhost`, database `shopping_cart`, user MySQL `root`, mật khẩu rỗng theo XAMPP hiện tại. Điều chỉnh nếu máy chạy dùng cấu hình khác.
+4. Với Apache đang phục vụ dự án tại `/web/`, mở **http://localhost/web/TH4/app/**.
+5. Đăng nhập bằng tài khoản mẫu hoặc đăng ký tài khoản mới.
 
----
+Có thể dùng PHP server thay Apache: từ thư mục gốc dự án chạy:
 
-### 3️⃣ Thực Hành 4 (TH4): Ứng Dụng Quản Lý Giỏ Hàng (PHP + MySQL)
+```bash
+php -S localhost:8000 -t TH4/app
+```
 
-Đây là ứng dụng Web CRUD hoàn chỉnh kết hợp PHP và MySQL:
+Sau đó mở **http://localhost:8000/**. MySQL vẫn cần chạy.
 
-* **Bước 1: Khởi động Dịch vụ**
-  * Mở **XAMPP Control Panel**, nhấn **Start** ở cả 2 module: **Apache** và **MySQL**.
+### Database và tài khoản mẫu
 
-* **Bước 2: Chuẩn bị Cơ sở dữ liệu**
-  * Đảm bảo Database `shopping_cart` và bảng `products` đã được khởi tạo trong MySQL (qua phpMyAdmin hoặc chạy lệnh SQL tạo bảng kèm 5 sản phẩm mẫu).
+SQL cung cấp bảng `products` với 5 sản phẩm và bảng `users` với 2 tài khoản:
 
-* **Bước 3: Truy cập vào ứng dụng trên Trình duyệt**
-  * **Cách Khuyên dùng (qua XAMPP)**:
-    👉 Mở trình duyệt vào link: **`http://localhost/web/TH4/`** (hoặc `http://localhost/web/TH4/product_list.php`)
-  * **Cách thay thế (qua PHP Built-in Server)**:
-    Mở Terminal tại `d:\web`, gõ:
-    ```bash
-    php -S localhost:8000
-    ```
-    Sau đó truy cập: **`http://localhost:8000/TH4/`**
+| Tên đăng nhập | Mật khẩu mẫu |
+|---|---|
+| viet | Viet@123456 |
+| user01 | User@123456 |
 
+Mật khẩu trong cột `users.password` là chuỗi băm tạo bằng PHP `password_hash()`. File SQL có thể nhập lại: bản ghi trùng ID sản phẩm hoặc tên đăng nhập được giữ nguyên, không đặt lại mật khẩu đã có. File không xóa dữ liệu và không tự sửa cấu trúc bảng đã tồn tại. Các bảng `cart_items`, `movies` của TH3 không bị thay đổi.
 
+## Kiểm tra và bài nộp
+
+Đã kiểm tra cú pháp PHP, validation, thao tác CRUD, đăng ký/đăng nhập/đăng xuất, session và kiểm soát truy cập. Các phép thử ghi dữ liệu tự động dùng transaction rồi rollback. SQL đã được thử nhập hai lần trên bảng tạm, xác nhận đủ 5 sản phẩm, 2 tài khoản và hai mật khẩu hợp lệ.
+
+Ngày **15/10/2026**, sau khi chuyển bài vào `TH4/app/`, sinh viên xác nhận đã test xong.
+
+Bài nộp TH4 gồm **toàn bộ thư mục TH4/**: source trong `app/`, file `shopping_cart.sql` và README hướng dẫn. `app/assets/.gitkeep` giữ thư mục tài nguyên khi nộp qua Git.
