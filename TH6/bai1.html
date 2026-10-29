@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Bài 1 — Thẻ thông tin sinh viên</title>
+    <style>
+        * { box-sizing: border-box; }
+        [v-cloak] { display: none; }
+        body { margin: 0; background: #f3f6fb; color: #20304a; font: 16px/1.6 system-ui, sans-serif; }
+        .container { width: min(100% - 32px, 980px); margin: 32px auto; }
+        nav { display: flex; gap: 10px 20px; flex-wrap: wrap; margin-bottom: 28px; }
+        a { color: #245bb2; text-underline-offset: 3px; }
+        a[aria-current="page"] { font-weight: 700; }
+        .eyebrow { margin: 0 0 6px; color: #4f6280; font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+        h1 { margin: 0; font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.25; }
+        .lead { margin: 10px 0 26px; color: #53647c; }
+        .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+        .panel { background: white; border: 1px solid #dbe3ef; border-radius: 16px; padding: 28px; box-shadow: 0 6px 24px #20304a06; min-width: 0; }
+        .student-top { display: flex; align-items: center; gap: 18px; border-bottom: 1px solid #e6ebf3; padding-bottom: 22px; margin-bottom: 20px; }
+        .avatar { width: 88px; height: 88px; flex-shrink: 0; border-radius: 50%; background: #e9effa; }
+        h2 { margin: 0 0 8px; font-size: 1.2rem; overflow-wrap: anywhere; }
+        .student-id { color: #53647c; margin: 0; }
+        dl { margin: 0; }
+        .detail { display: flex; gap: 18px; justify-content: space-between; padding: 10px 0; }
+        dt { color: #53647c; }
+        dd { margin: 0; text-align: right; font-weight: 600; overflow-wrap: anywhere; min-width: 0; }
+        .badge { display: inline-block; padding: 3px 11px; border-radius: 6px; font-size: .9rem; font-weight: 700; }
+        .grade-excellent, .status-active { color: #17613b; background: #e5f5ec; }
+        .grade-good { color: #204fa4; background: #e9f0ff; }
+        .grade-average { color: #795000; background: #fff3cf; }
+        .grade-fail, .status-inactive { color: #a12b35; background: #ffe9eb; }
+        .grade-invalid { color: #53647c; background: #edf0f5; }
+        button, input { font: inherit; }
+        button { border: 1px solid #245bb2; background: #245bb2; color: white; border-radius: 8px; padding: 10px 16px; cursor: pointer; }
+        button:hover { background: #194588; }
+        .intro-toggle { margin-top: 20px; width: 100%; }
+        .intro { padding: 14px 16px; background: #f3f6fb; border-left: 3px solid #6b8dcc; border-radius: 4px; overflow-wrap: anywhere; }
+        .intro p { margin: 0; }
+        .help { font-size: .9rem; color: #53647c; margin: 0 0 18px; }
+        .field { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; }
+        input[type="text"], input[type="number"] { width: 100%; min-width: 0; border: 1px solid #aab9cc; background: white; color: #20304a; border-radius: 7px; padding: 9px 11px; }
+        :focus-visible { outline: 3px solid #89aff1; outline-offset: 3px; }
+        .checkbox-label { display: flex; align-items: center; gap: 9px; font-weight: 500; margin-bottom: 0; }
+        input[type="checkbox"] { width: 18px; height: 18px; accent-color: #245bb2; }
+        .error { color: #a12b35; font-size: .9rem; margin: 5px 0 0; }
+        .note { margin: 24px 0 0; font-size: .85rem; color: #53647c; }
+        @media (max-width: 700px) {
+            .layout { grid-template-columns: 1fr; }
+            .panel { padding: 22px; }
+            .container { margin: 22px auto; }
+            .student-top { align-items: flex-start; }
+            .avatar { width: 72px; height: 72px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <nav aria-label="Bài thực hành">
+            <a href="index.html">Buổi 6</a>
+            <a href="bai1.html" aria-current="page">Bài 1</a>
+            <a href="bai2.html">Bài 2</a>
+            <a href="bai3.html">Bài 3</a>
+        </nav>
+        <header>
+            <p class="eyebrow">Bài 1 · VueJS</p>
+            <h1>Thẻ thông tin sinh viên</h1>
+            <p class="lead">Thông tin, xếp loại và trạng thái học tập cập nhật ngay khi dữ liệu thay đổi.</p>
+        </header>
+
+        <div id="app" class="layout" v-cloak>
+            <section class="panel" aria-label="Thông tin sinh viên">
+                <div class="student-top">
+                    <!-- Yêu cầu 3: cả đường dẫn và nội dung thay thế dùng v-bind. -->
+                    <img class="avatar" v-bind:src="student.avatar" v-bind:alt="'Ảnh đại diện của ' + student.fullName" width="88" height="88">
+                    <div>
+                        <!-- Yêu cầu 2: nội suy họ tên; v-text cho tên lớp ở bên dưới. -->
+                        <h2>{{ student.fullName }}</h2>
+                        <p class="student-id">Mã sinh viên: {{ student.id }}</p>
+                    </div>
+                </div>
+
+                <dl>
+                    <div class="detail"><dt>Lớp</dt><dd v-text="student.className"></dd></div>
+                    <div class="detail"><dt>Điểm trung bình</dt><dd>{{ validAverage ? student.average : 'Chưa hợp lệ' }}</dd></div>
+                    <div class="detail">
+                        <dt>Xếp loại</dt>
+                        <dd>
+                            <!-- Yêu cầu 4, 5: v-if theo mốc điểm, :class đổi màu tự động. -->
+                            <span class="badge" :class="gradeClass">
+                                <span v-if="!validAverage">Chưa xếp loại</span>
+                                <span v-else-if="student.average >= 8">Giỏi</span>
+                                <span v-else-if="student.average >= 6.5">Khá</span>
+                                <span v-else-if="student.average >= 5">Trung bình</span>
+                                <span v-else>Chưa đạt</span>
+                            </span>
+                        </dd>
+                    </div>
+                    <div class="detail">
+                        <dt>Trạng thái</dt>
+                        <dd>
+                            <span v-if="student.isStudying" class="badge status-active">Đang học</span>
+                            <span v-else class="badge status-inactive">Đã nghỉ</span>
+                        </dd>
+                    </div>
+                </dl>
+
+                <!-- Yêu cầu 7: v-show giữ phần giới thiệu trong DOM khi ẩn. -->
+                <button type="button" class="intro-toggle" @click="showIntroduction = !showIntroduction" :aria-expanded="showIntroduction" aria-controls="introduction">
+                    {{ showIntroduction ? 'Ẩn giới thiệu' : 'Hiện giới thiệu' }}
+                </button>
+                <div id="introduction" class="intro" v-show="showIntroduction">
+                    <p>Xin chào, mình là {{ student.fullName }}, sinh viên lớp <span v-text="student.className"></span>. Mình đang thực hành xây dựng giao diện với VueJS.</p>
+                </div>
+            </section>
+
+            <section class="panel" aria-labelledby="editor-title">
+                <h2 id="editor-title">Thay đổi thông tin</h2>
+                <p class="help">Sửa dữ liệu để quan sát thẻ sinh viên tự cập nhật.</p>
+                <div class="field">
+                    <label for="student-id">Mã sinh viên</label>
+                    <input id="student-id" type="text" v-model.trim="student.id">
+                </div>
+                <div class="field">
+                    <label for="student-name">Họ tên</label>
+                    <input id="student-name" type="text" v-model.trim="student.fullName" autocomplete="name">
+                </div>
+                <div class="field">
+                    <label for="student-class">Lớp</label>
+                    <input id="student-class" type="text" v-model.trim="student.className">
+                </div>
+                <div class="field">
+                    <label for="student-average">Điểm trung bình (0–10)</label>
+                    <input id="student-average" type="number" min="0" max="10" step="any" v-model.number="student.average" :aria-invalid="!validAverage" aria-describedby="average-error">
+                    <p id="average-error" class="error" v-show="!validAverage" role="status">Nhập một số từ 0 đến 10 để xếp loại.</p>
+                </div>
+                <label class="checkbox-label" for="student-status">
+                    <input id="student-status" type="checkbox" v-model="student.isStudying">
+                    Sinh viên đang học
+                </label>
+            </section>
+        </div>
+        <noscript><p>Vui lòng bật JavaScript để xem thẻ sinh viên.</p></noscript>
+        <p class="note">Nguyễn Công Việt · 23001953 · Thực hành Phát triển ứng dụng Web</p>
+    </main>
+
+    <script src="assets/vue.global.prod.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    // Yêu cầu 1: đủ sáu thông tin của sinh viên.
+                    student: {
+                        id: '23001953',
+                        fullName: 'Nguyễn Công Việt',
+                        className: 'KHMT&TT K68',
+                        avatar: 'assets/student-avatar.svg',
+                        average: 8.5,
+                        isStudying: true
+                    },
+                    showIntroduction: true
+                };
+            },
+            computed: {
+                validAverage() {
+                    return typeof this.student.average === 'number'
+                        && Number.isFinite(this.student.average)
+                        && this.student.average >= 0
+                        && this.student.average <= 10;
+                },
+                gradeClass() {
+                    if (!this.validAverage) return 'grade-invalid';
+                    if (this.student.average >= 8) return 'grade-excellent';
+                    if (this.student.average >= 6.5) return 'grade-good';
+                    if (this.student.average >= 5) return 'grade-average';
+                    return 'grade-fail';
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

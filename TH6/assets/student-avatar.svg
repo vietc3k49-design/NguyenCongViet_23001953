@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Minh họa sinh viên">
+  <circle cx="80" cy="80" r="80" fill="#e8effb"/>
+  <path d="M22 160c2-35 25-57 58-57s56 22 58 57" fill="#3266b7"/>
+  <path d="m62 108 18 18 18-18-18 40Z" fill="#fff"/>
+  <circle cx="80" cy="65" r="31" fill="#e9b99a"/>
+  <path d="M49 64c-7-31 10-47 32-47 24 0 40 20 31 49l-9-22c-13 10-26 10-41 4l-8 19Z" fill="#26364f"/>
+  <path d="M71 79q9 7 18 0" fill="none" stroke="#9b5d49" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="68" cy="65" r="2.5" fill="#26364f"/>
+  <circle cx="92" cy="65" r="2.5" fill="#26364f"/>
+</svg>

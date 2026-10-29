@@ -75,6 +75,17 @@ Các điểm kiểm tra dữ liệu và truy cập:
 - Bốn trang sản phẩm đều yêu cầu đăng nhập, kể cả khi gửi POST trực tiếp. Người chưa đăng nhập được chuyển về login.
 - Truy vấn có dữ liệu đầu vào dùng prepared statements; nội dung hiển thị được escape; mật khẩu dùng password_hash/password_verify.
 
+### TH6 — VueJS
+
+- [Mục lục](./TH6/index.html): chọn một trong ba bài thực hành.
+- [bai1.html](./TH6/bai1.html): thẻ sinh viên, xếp loại, trạng thái và ẩn/hiện giới thiệu.
+- [bai2.html](./TH6/bai2.html): đặt vé, kiểm tra dữ liệu, computed tổng tiền và xác nhận ngay trên trang.
+- [bai3.html](./TH6/bai3.html): thêm/xóa công việc, checkbox hoàn thành, bộ lọc và thống kê.
+
+Đã đối chiếu đủ 26 yêu cầu đề. Bản nộp cuối được kiểm tra lại ngày 29/10/2026: 74/74 kiểm tra đạt trên Chromium, gồm các chức năng chính, liên kết/tài nguyên offline và bố cục 320–1440 px. Thư mục TH6 giữ bản nộp gọn gồm 4 file HTML và `assets/`.
+
+Mở `TH6/index.html` trực tiếp bằng trình duyệt hoặc **http://localhost/web/TH6/** khi chạy Apache. Vue 3 và ảnh được lưu trong `TH6/assets/`, hoạt động offline; không cần MySQL hoặc bước build.
+
 ## Hướng dẫn chạy
 
 ### TH1 và TH2

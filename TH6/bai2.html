@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bài 2 buổi 6: đặt vé xem phim bằng VueJS.">
+    <title>Bài 2 — Đặt vé xem phim</title>
+    <style>
+        :root { color-scheme: light; font-family: Arial, sans-serif; color: #182b44; background: #f3f6fa; }
+        * { box-sizing: border-box; }
+        [v-cloak] { display: none; }
+        body { margin: 0; line-height: 1.6; }
+        a { color: #245bb1; text-underline-offset: 3px; }
+        button, input, select { font: inherit; }
+        button, input, select, a { -webkit-tap-highlight-color: transparent; }
+        :focus-visible { outline: 3px solid #d08b16; outline-offset: 3px; }
+        .page { max-width: 1060px; padding: 28px 24px 40px; margin: auto; }
+        nav { display: flex; gap: 10px 22px; flex-wrap: wrap; margin-bottom: 28px; }
+        nav a { font-size: .92rem; }
+        .eyebrow { margin: 0 0 6px; color: #40638b; font-size: .8rem; font-weight: bold; letter-spacing: .08em; text-transform: uppercase; }
+        h1 { margin: 0 0 8px; font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.2; }
+        .intro { color: #52657c; margin: 0 0 25px; }
+        .layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(260px, 1fr); gap: 22px; align-items: start; }
+        .card { background: white; border: 1px solid #dce4ee; border-radius: 16px; padding: 26px; box-shadow: 0 6px 22px #142e4d06; }
+        h2 { margin: 0 0 18px; font-size: 1.18rem; }
+        .field { margin-bottom: 20px; }
+        label, legend { font-weight: bold; }
+        .field > label { display: block; margin-bottom: 7px; }
+        input[type="text"], input[type="number"], select { width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid #aab9cb; border-radius: 8px; color: #182b44; background: white; }
+        input[aria-invalid="true"] { border-color: #b13239; }
+        fieldset { padding: 0; border: 0; margin: 0 0 20px; min-width: 0; }
+        legend { margin-bottom: 8px; padding: 0; }
+        .radio-option { display: flex; gap: 10px; align-items: center; padding: 11px 12px; margin-bottom: 8px; border: 1px solid #dce4ee; border-radius: 8px; font-weight: normal; cursor: pointer; }
+        input[type="radio"], input[type="checkbox"] { width: 18px; height: 18px; flex: 0 0 auto; accent-color: #245bb1; }
+        .radio-option span { margin-left: auto; font-weight: bold; white-space: nowrap; }
+        .quantity-control { display: flex; gap: 9px; }
+        .quantity-control button { min-width: 45px; padding: 6px 12px; }
+        .quantity-control input { text-align: center; }
+        button { border: 1px solid #b8c6d7; border-radius: 8px; padding: 10px 17px; color: #244569; background: #f5f8fc; font-weight: bold; cursor: pointer; }
+        button:hover:not(:disabled) { background: #e9f0f9; }
+        button:disabled { opacity: .48; cursor: not-allowed; }
+        .primary { color: white; background: #245bb1; border-color: #245bb1; }
+        .primary:hover:not(:disabled) { background: #174888; }
+        .combo { display: flex; align-items: flex-start; gap: 10px; font-weight: normal; cursor: pointer; }
+        .combo input { margin-top: 5px; }
+        .hint { margin: 5px 0 0; font-size: .87rem; color: #52657c; }
+        .error { margin: 6px 0 0; font-size: .87rem; color: #a2242c; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+        .movie { padding-bottom: 17px; margin-bottom: 17px; border-bottom: 1px solid #e1e7ef; }
+        .movie h2 { margin-bottom: 4px; }
+        .movie p { color: #52657c; margin: 0; font-size: .9rem; }
+        dl { margin: 0; }
+        .summary-row { display: flex; gap: 18px; justify-content: space-between; margin-bottom: 12px; }
+        dt { color: #52657c; }
+        dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+        .total { border-top: 1px solid #dce4ee; padding-top: 16px; margin-top: 17px; font-size: 1.15rem; font-weight: bold; }
+        .total dt { color: #182b44; }
+        .total dd { color: #245bb1; }
+        .confirmation { margin-top: 22px; background: #f0faf4; border-color: #b9dec8; }
+        .confirmation h2 { color: #1b643c; }
+        .confirmation .summary-row:last-child { margin-bottom: 0; }
+        .confirmation dt { color: #355c48; }
+        footer { margin-top: 26px; color: #52657c; font-size: .86rem; }
+        @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } .page { padding: 22px 16px; } .card { padding: 21px; } }
+        @media (max-width: 380px) { .summary-row { gap: 10px; } .radio-option { font-size: .92rem; } }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <nav aria-label="Điều hướng bài thực hành">
+            <a href="index.html">Mục lục TH6</a>
+            <a href="bai1.html">Bài 1 · Sinh viên</a>
+            <a href="bai2.html" aria-current="page">Bài 2 · Đặt vé</a>
+            <a href="bai3.html">Bài 3 · Công việc</a>
+        </nav>
+        <p class="eyebrow">Thực hành VueJS · Bài 2</p>
+        <h1>Đặt vé xem phim</h1>
+        <p class="intro">Chọn suất chiếu và loại vé. Tổng tiền cập nhật ngay khi bạn thay đổi lựa chọn.</p>
+
+        <div id="app" v-cloak>
+            <div class="layout">
+                <!-- novalidate để cùng một bộ kiểm tra dữ liệu xử lý cả click và Enter. -->
+                <form class="card" @submit.prevent="bookTickets" novalidate>
+                    <h2>Thông tin đặt vé</h2>
+                    <div class="field">
+                        <label for="customer-name">Họ tên khách hàng</label>
+                        <input id="customer-name" type="text" v-model.trim="customerName" autocomplete="name" placeholder="Nhập họ tên của bạn" required
+                            @blur="nameTouched = true" :aria-invalid="nameTouched && !nameValid ? 'true' : 'false'" aria-describedby="name-error">
+                        <p id="name-error" class="error" v-if="nameTouched && !nameValid">Vui lòng nhập họ tên, không chỉ nhập khoảng trắng.</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="showtime">Suất chiếu</label>
+                        <select id="showtime" v-model="showtime">
+                            <option v-for="time in showtimes" :key="time" :value="time">{{ time }}</option>
+                        </select>
+                    </div>
+
+                    <fieldset>
+                        <legend>Loại vé</legend>
+                        <label class="radio-option">
+                            <input type="radio" name="ticket-type" value="regular" v-model="ticketType">
+                            Vé thường <span>{{ formatMoney(70000) }}</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="ticket-type" value="vip" v-model="ticketType">
+                            Vé VIP <span>{{ formatMoney(100000) }}</span>
+                        </label>
+                    </fieldset>
+
+                    <div class="field">
+                        <label for="quantity">Số lượng vé</label>
+                        <div class="quantity-control">
+                            <button type="button" @click="changeQuantity(-1)" :disabled="quantityValid && quantity === 1" aria-label="Giảm số lượng vé">−</button>
+                            <input id="quantity" type="number" min="1" max="10" step="1" v-model.number="quantity" required
+                                :aria-invalid="!quantityValid ? 'true' : 'false'" aria-describedby="quantity-hint quantity-error">
+                            <button type="button" @click="changeQuantity(1)" :disabled="quantityValid && quantity === 10" aria-label="Tăng số lượng vé">+</button>
+                        </div>
+                        <p id="quantity-hint" class="hint">Mỗi đơn từ 1 đến 10 vé, chỉ nhận số nguyên.</p>
+                        <p id="quantity-error" class="error" v-if="!quantityValid">Vui lòng nhập số nguyên từ 1 đến 10.</p>
+                    </div>
+
+                    <label class="combo">
+                        <input type="checkbox" v-model="hasCombo">
+                        <span>Thêm combo bắp nước<br><span class="hint">45.000 đồng cho mỗi đơn đặt vé.</span></span>
+                    </label>
+                    <div class="actions">
+                        <button type="submit" class="primary" :disabled="!canBook">Đặt vé</button>
+                        <button type="button" @click="resetForm">Đặt lại form</button>
+                    </div>
+                    <p class="hint" v-if="!canBook">Nhập họ tên và số lượng hợp lệ để đặt vé.</p>
+                </form>
+
+                <aside class="card" aria-label="Tóm tắt giá vé">
+                    <div class="movie">
+                        <p class="eyebrow">Phim đang chọn</p>
+                        <h2>{{ movieTitle }}</h2>
+                        <p>Hoạt hình · Phiêu lưu · 2D</p>
+                    </div>
+                    <dl aria-live="polite" aria-atomic="true">
+                        <div class="summary-row"><dt>Suất chiếu</dt><dd>{{ showtime }}</dd></div>
+                        <div class="summary-row"><dt>Đơn giá vé</dt><dd>{{ formatMoney(ticketPrice) }}</dd></div>
+                        <div class="summary-row"><dt>Số lượng</dt><dd>{{ quantityValid ? quantity : 'Chưa hợp lệ' }}</dd></div>
+                        <div class="summary-row"><dt>Combo mỗi đơn</dt><dd>{{ formatMoney(comboPrice) }}</dd></div>
+                        <div class="summary-row total"><dt>Tổng tiền</dt><dd>{{ quantityValid ? formatMoney(totalPrice) : '—' }}</dd></div>
+                    </dl>
+                    <p class="hint">Tổng tiền = Giá vé × Số lượng + Tiền combo.</p>
+                </aside>
+            </div>
+
+            <!-- Sao chép các giá trị đơn đã gửi để sửa form không làm đổi xác nhận cũ. -->
+            <section v-if="confirmation" class="card confirmation" role="status" aria-live="polite" aria-label="Xác nhận đặt vé">
+                <h2>Đặt vé thành công</h2>
+                <dl>
+                    <div class="summary-row"><dt>Khách hàng</dt><dd>{{ confirmation.customerName }}</dd></div>
+                    <div class="summary-row"><dt>Phim</dt><dd>{{ confirmation.movieTitle }}</dd></div>
+                    <div class="summary-row"><dt>Suất chiếu</dt><dd>{{ confirmation.showtime }}</dd></div>
+                    <div class="summary-row"><dt>Loại vé</dt><dd>{{ confirmation.ticketLabel }}</dd></div>
+                    <div class="summary-row"><dt>Đơn giá</dt><dd>{{ formatMoney(confirmation.ticketPrice) }}</dd></div>
+                    <div class="summary-row"><dt>Số lượng</dt><dd>{{ confirmation.quantity }}</dd></div>
+                    <div class="summary-row"><dt>Combo bắp nước</dt><dd>{{ confirmation.hasCombo ? 'Có · ' + formatMoney(confirmation.comboPrice) : 'Không' }}</dd></div>
+                    <div class="summary-row total"><dt>Tổng thanh toán</dt><dd>{{ formatMoney(confirmation.totalPrice) }}</dd></div>
+                </dl>
+            </section>
+        </div>
+        <noscript><p>Vui lòng bật JavaScript để sử dụng bài thực hành.</p></noscript>
+        <footer>Nguyễn Công Việt · 23001953 · Thực hành buổi 6</footer>
+    </main>
+
+    <script src="assets/vue.global.prod.js"></script>
+    <script>
+        const booking = Vue.createApp({
+            data() {
+                return {
+                    movieTitle: 'Hành trình của Moana',
+                    showtimes: ['09:00', '14:00', '19:30'],
+                    customerName: '',
+                    showtime: '09:00',
+                    ticketType: 'regular',
+                    quantity: 1,
+                    hasCombo: false,
+                    nameTouched: false,
+                    confirmation: null
+                };
+            },
+            computed: {
+                nameValid() {
+                    return typeof this.customerName === 'string' && this.customerName.trim().length > 0;
+                },
+                quantityValid() {
+                    return Number.isInteger(this.quantity) && this.quantity >= 1 && this.quantity <= 10;
+                },
+                ticketPrice() {
+                    return this.ticketType === 'vip' ? 100000 : 70000;
+                },
+                comboPrice() {
+                    return this.hasCombo ? 45000 : 0;
+                },
+                totalPrice() {
+                    return this.quantityValid ? this.ticketPrice * this.quantity + this.comboPrice : 0;
+                },
+                canBook() {
+                    return this.nameValid && this.quantityValid
+                        && this.showtimes.includes(this.showtime)
+                        && ['regular', 'vip'].includes(this.ticketType);
+                }
+            },
+            methods: {
+                formatMoney(amount) {
+                    return new Intl.NumberFormat('vi-VN').format(amount) + ' đồng';
+                },
+                changeQuantity(change) {
+                    // Nếu đang nhập dữ liệu sai, nút đưa số lượng về mức hợp lệ tối thiểu.
+                    this.quantity = this.quantityValid
+                        ? Math.min(10, Math.max(1, this.quantity + change))
+                        : 1;
+                },
+                bookTickets() {
+                    this.nameTouched = true;
+                    // Kiểm tra lại trong method, không chỉ dựa vào trạng thái disabled của nút.
+                    if (!this.canBook) return;
+                    this.confirmation = {
+                        customerName: this.customerName.trim(),
+                        movieTitle: this.movieTitle,
+                        showtime: this.showtime,
+                        ticketLabel: this.ticketType === 'vip' ? 'Vé VIP' : 'Vé thường',
+                        ticketPrice: this.ticketPrice,
+                        quantity: this.quantity,
+                        hasCombo: this.hasCombo,
+                        comboPrice: this.comboPrice,
+                        totalPrice: this.totalPrice
+                    };
+                },
+                resetForm() {
+                    this.customerName = '';
+                    this.showtime = this.showtimes[0];
+                    this.ticketType = 'regular';
+                    this.quantity = 1;
+                    this.hasCombo = false;
+                    this.nameTouched = false;
+                    this.confirmation = null;
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

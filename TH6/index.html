@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bài thực hành số 6 VueJS — Nguyễn Công Việt, 23001953.">
+  <title>Thực hành buổi 6 — VueJS</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f3f6fa; color: #213547; font-family: system-ui, sans-serif; line-height: 1.6; }
+    main { max-width: 1000px; margin: 0 auto; padding: 56px 24px; }
+    .eyebrow { color: #147d5a; font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.2; margin: 12px 0; }
+    .intro { color: #526277; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 32px 0; }
+    .card { display: flex; flex-direction: column; padding: 24px; background: white; border: 1px solid #dce4ec; border-radius: 16px; color: inherit; text-decoration: none; }
+    .card:hover { border-color: #147d5a; box-shadow: 0 8px 24px #21354712; }
+    a:focus-visible { outline: 3px solid #147d5a; outline-offset: 4px; }
+    .number { color: #147d5a; font-weight: 700; }
+    h2 { font-size: 1.15rem; line-height: 1.4; }
+    .card p { margin-top: 0; color: #526277; }
+    .open { margin-top: auto; padding-top: 12px; font-weight: 700; color: #147d5a; }
+    .note { padding: 18px 22px; background: #e7f3ed; border-radius: 12px; }
+    footer { color: #526277; font-size: .9rem; margin-top: 32px; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } main { padding: 32px 18px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Phát triển ứng dụng Web · Buổi 6</p>
+    <h1>Thực hành VueJS</h1>
+    <p class="intro">Nguyễn Công Việt · Mã sinh viên: <strong>23001953</strong></p>
+    <nav class="grid" aria-label="Các bài thực hành">
+      <a class="card" href="bai1.html">
+        <span class="number">BÀI 01</span>
+        <h2>Thẻ thông tin sinh viên</h2>
+        <p>Hiển thị thông tin, xếp loại theo điểm và bật/tắt giới thiệu. Thay đổi dữ liệu để xem giao diện tự cập nhật.</p>
+        <span class="open">Mở bài 1 →</span>
+      </a>
+      <a class="card" href="bai2.html">
+        <span class="number">BÀI 02</span>
+        <h2>Đặt vé xem phim</h2>
+        <p>Chọn suất chiếu, loại vé, số lượng và combo. Tính tổng tiền và xem xác nhận đặt vé ngay trên trang.</p>
+        <span class="open">Mở bài 2 →</span>
+      </a>
+      <a class="card" href="bai3.html">
+        <span class="number">BÀI 03</span>
+        <h2>Quản lý công việc cá nhân</h2>
+        <p>Thêm công việc, đánh dấu hoàn thành, lọc danh sách và theo dõi số việc còn lại trong ngày.</p>
+        <span class="open">Mở bài 3 →</span>
+      </a>
+    </nav>
+    <p class="note">Chọn một bài để bắt đầu. Cả ba bài sử dụng Vue 3 được lưu sẵn trong thư mục <code>assets/</code>, có thể chạy không cần Internet.</p>
+    <footer>Bài thực hành số 6 — VueJS · HTML, CSS và JavaScript thuần với Vue 3</footer>
+  </main>
+</body>
+</html>

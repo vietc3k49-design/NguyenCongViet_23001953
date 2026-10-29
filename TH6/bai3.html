@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 3 — Quản lý công việc cá nhân</title>
+    <style>
+        * { box-sizing: border-box; }
+        [v-cloak] { display: none; }
+        body {
+            margin: 0;
+            background: #f3f6fb;
+            color: #1f2937;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+        a { color: #234eab; }
+        button, input { font: inherit; }
+        button { cursor: pointer; }
+        button:disabled { cursor: default; opacity: .55; }
+        :focus-visible { outline: 3px solid #d97706; outline-offset: 3px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 28px 20px 40px; }
+        nav { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-bottom: 24px; }
+        nav a { text-decoration: none; }
+        nav a[aria-current="page"] { font-weight: 700; text-decoration: underline; }
+        .eyebrow { color: #3156a0; font-size: .85rem; font-weight: 700; letter-spacing: .05em; }
+        h1 { font-size: clamp(1.65rem, 4vw, 2.15rem); line-height: 1.25; margin: 8px 0 12px; }
+        h2 { font-size: 1.15rem; margin: 0 0 16px; }
+        .intro { color: #536176; margin: 0 0 24px; }
+        .panel { background: #fff; border: 1px solid #dbe3ef; border-radius: 14px; padding: 24px; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+        .stat { background: #fff; border: 1px solid #dbe3ef; border-radius: 12px; padding: 16px; }
+        .stat strong { display: block; color: #234eab; font-size: 1.75rem; line-height: 1.3; }
+        .stat span { color: #536176; font-size: .9rem; }
+        label { display: block; font-weight: 700; margin-bottom: 7px; }
+        .add-row { display: flex; gap: 10px; }
+        .task-input {
+            width: 100%; min-width: 0; border: 1px solid #8a99b0; border-radius: 7px;
+            padding: 10px 12px; background: #fff; color: #1f2937;
+        }
+        .task-input[aria-invalid="true"] { border-color: #b42318; }
+        .button { border: 1px solid #c3ccdb; border-radius: 7px; padding: 9px 16px; background: #fff; color: #25334a; }
+        .button:hover:not(:disabled) { background: #edf2fc; }
+        .primary { background: #234eab; color: #fff; border-color: #234eab; }
+        .primary:hover:not(:disabled) { background: #173b87; }
+        .help { color: #536176; font-size: .9rem; margin: 7px 0 0; }
+        .error { color: #b42318; margin: 8px 0 0; }
+        .notice { padding: 10px 12px; border-radius: 7px; background: #edf5ff; color: #234775; margin: 16px 0 0; overflow-wrap: anywhere; }
+        .toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin: 26px 0 18px; }
+        .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+        .filters .button { padding: 7px 12px; font-size: .9rem; }
+        .filters .active { background: #234eab; color: #fff; border-color: #234eab; }
+        .danger { color: #a51d23; border-color: #e3a9ac; font-size: .9rem; }
+        .danger:hover:not(:disabled) { background: #fff0f0; }
+        .task-list { list-style: none; padding: 0; margin: 0; }
+        .task-item { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #e4e9f1; }
+        .task-item:first-child { border-top: 1px solid #e4e9f1; }
+        .task-label { display: flex; align-items: flex-start; gap: 12px; flex: 1; min-width: 0; font-weight: 400; margin: 0; cursor: pointer; }
+        .task-check { width: 19px; height: 19px; margin: 4px 0 0; flex: 0 0 auto; accent-color: #234eab; }
+        .task-name { overflow-wrap: anywhere; }
+        .completed .task-name { text-decoration: line-through; color: #657184; }
+        .delete-button { flex: 0 0 auto; padding: 5px 12px; }
+        .empty { text-align: center; border: 1px dashed #c3ccdb; border-radius: 10px; padding: 32px 16px; color: #536176; }
+        .empty strong { display: block; color: #25334a; margin-bottom: 5px; }
+        .empty p { margin: 0; }
+        footer { color: #536176; font-size: .85rem; margin-top: 24px; }
+        @media (max-width: 560px) {
+            .container { padding: 20px 14px 30px; }
+            .panel { padding: 18px 14px; }
+            .stats { gap: 8px; }
+            .stat { padding: 12px 9px; }
+            .stat span { font-size: .8rem; }
+            .stat strong { font-size: 1.5rem; }
+            .add-row { flex-wrap: wrap; }
+            .add-row .primary { width: 100%; }
+            .task-item { gap: 8px; }
+            .task-label { gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <nav aria-label="Các bài thực hành">
+            <a href="index.html">Mục lục TH6</a>
+            <a href="bai1.html">Bài 1</a>
+            <a href="bai2.html">Bài 2</a>
+            <a href="bai3.html" aria-current="page">Bài 3</a>
+        </nav>
+        <header>
+            <span class="eyebrow">THỰC HÀNH VUEJS · BÀI 3</span>
+            <h1>Quản lý công việc cá nhân</h1>
+            <p class="intro">Ghi lại công việc trong ngày, theo dõi tiến độ và tập trung vào những việc cần làm.</p>
+        </header>
+
+        <div id="app" v-cloak>
+            <!-- Yêu cầu 8: các số liệu dùng computed, tính trên toàn bộ danh sách. -->
+            <section class="stats" aria-label="Thống kê công việc" aria-live="polite">
+                <div class="stat"><strong>{{ totalTasks }}</strong><span>Tổng công việc</span></div>
+                <div class="stat"><strong>{{ incompleteTasks }}</strong><span>Chưa hoàn thành</span></div>
+                <div class="stat"><strong>{{ completedTasks }}</strong><span>Đã hoàn thành</span></div>
+            </section>
+
+            <section class="panel" aria-labelledby="list-title">
+                <h2 id="list-title">Công việc hôm nay</h2>
+                <!-- Yêu cầu 2, 3: submit xử lý cả nút Thêm và Enter, không tải lại trang. -->
+                <form @submit.prevent="addTask" novalidate>
+                    <label for="new-task">Tên công việc mới</label>
+                    <div class="add-row">
+                        <input id="new-task" class="task-input" type="text" v-model.trim="newTask"
+                            @input="error = ''" placeholder="Ví dụ: Ôn tập các directive VueJS"
+                            :aria-invalid="error ? 'true' : 'false'"
+                            :aria-describedby="error ? 'task-help task-error' : 'task-help'" autocomplete="off">
+                        <button class="button primary" type="submit">Thêm</button>
+                    </div>
+                    <p class="help" id="task-help">Nhập tên rồi nhấn Enter hoặc nút Thêm. Dữ liệu chỉ được giữ trong phiên trang hiện tại.</p>
+                    <p v-if="error" class="error" id="task-error" role="alert">{{ error }}</p>
+                </form>
+
+                <p v-if="notice" class="notice" role="status">{{ notice }}</p>
+
+                <div class="toolbar">
+                    <!-- Yêu cầu 7: ba bộ lọc, trạng thái chọn được mô tả bằng aria-pressed. -->
+                    <div class="filters" role="group" aria-label="Lọc trạng thái công việc">
+                        <button type="button" class="button" :class="{ active: filter === 'all' }"
+                            :aria-pressed="filter === 'all'" @click="filter = 'all'">Tất cả</button>
+                        <button type="button" class="button" :class="{ active: filter === 'incomplete' }"
+                            :aria-pressed="filter === 'incomplete'" @click="filter = 'incomplete'">Chưa hoàn thành</button>
+                        <button type="button" class="button" :class="{ active: filter === 'completed' }"
+                            :aria-pressed="filter === 'completed'" @click="filter = 'completed'">Đã hoàn thành</button>
+                    </div>
+                    <!-- Yêu cầu 9: xóa các việc hoàn thành trên toàn bộ danh sách. -->
+                    <button type="button" class="button danger" @click="clearCompleted"
+                        :disabled="completedTasks === 0">Xóa các việc đã hoàn thành</button>
+                </div>
+
+                <!-- Yêu cầu 4, 5, 6: key là id ổn định; checkbox cập nhật trạng thái; xóa theo id. -->
+                <ul v-if="filteredTasks.length" class="task-list" aria-label="Danh sách công việc">
+                    <li v-for="task in filteredTasks" :key="task.id" class="task-item"
+                        :class="{ completed: task.completed }">
+                        <label class="task-label" :for="'task-' + task.id">
+                            <input class="task-check" type="checkbox" :id="'task-' + task.id"
+                                v-model="task.completed" @change="announceStatus(task)">
+                            <span class="task-name">{{ task.name }}</span>
+                        </label>
+                        <button type="button" class="button danger delete-button" @click="removeTask(task.id)"
+                            :aria-label="'Xóa công việc: ' + task.name">Xóa</button>
+                    </li>
+                </ul>
+
+                <!-- Yêu cầu 10: phân biệt danh sách rỗng và bộ lọc không có kết quả. -->
+                <div v-else class="empty" role="status">
+                    <template v-if="totalTasks === 0">
+                        <strong>Chưa có công việc nào.</strong>
+                        <p>Thêm công việc đầu tiên bằng biểu mẫu phía trên.</p>
+                    </template>
+                    <template v-else-if="filter === 'completed'">
+                        <strong>Chưa có công việc đã hoàn thành.</strong>
+                        <p>Đánh dấu hoàn thành một công việc hoặc chọn bộ lọc khác.</p>
+                    </template>
+                    <template v-else>
+                        <strong>Không còn công việc chưa hoàn thành.</strong>
+                        <p>Bạn đã hoàn thành tất cả công việc. Chọn “Tất cả” để xem lại.</p>
+                    </template>
+                </div>
+            </section>
+        </div>
+        <noscript><p>Vui lòng bật JavaScript để sử dụng ứng dụng VueJS.</p></noscript>
+        <footer>Nguyễn Công Việt — 23001953 · Bài 3: v-for, :key, checkbox, methods và computed.</footer>
+    </main>
+
+    <script src="assets/vue.global.prod.js"></script>
+    <script>
+        const taskApp = Vue.createApp({
+            data() {
+                return {
+                    // Yêu cầu 1: mỗi công việc được tạo với id, name và completed.
+                    tasks: [],
+                    nextId: 1,
+                    newTask: '',
+                    filter: 'all',
+                    error: '',
+                    notice: ''
+                };
+            },
+            computed: {
+                totalTasks() {
+                    return this.tasks.length;
+                },
+                incompleteTasks() {
+                    return this.tasks.filter(task => !task.completed).length;
+                },
+                completedTasks() {
+                    return this.totalTasks - this.incompleteTasks;
+                },
+                filteredTasks() {
+                    if (this.filter === 'incomplete') {
+                        return this.tasks.filter(task => !task.completed);
+                    }
+                    if (this.filter === 'completed') {
+                        return this.tasks.filter(task => task.completed);
+                    }
+                    return this.tasks;
+                }
+            },
+            methods: {
+                addTask() {
+                    const name = this.newTask.trim();
+                    if (!name) {
+                        this.error = 'Vui lòng nhập tên công việc, không chỉ nhập khoảng trắng.';
+                        this.notice = '';
+                        return;
+                    }
+                    // Counter tăng liên tục, không tái sử dụng id sau khi xóa.
+                    this.tasks.push({ id: this.nextId++, name, completed: false });
+                    this.newTask = '';
+                    this.error = '';
+                    if (this.filter === 'completed') {
+                        this.filter = 'all';
+                        this.notice = 'Đã thêm “' + name + '”. Đã chuyển sang Tất cả để hiển thị công việc mới.';
+                    } else {
+                        this.notice = 'Đã thêm “' + name + '”.';
+                    }
+                },
+                announceStatus(task) {
+                    this.notice = 'Đã đánh dấu “' + task.name + '” là ' +
+                        (task.completed ? 'đã hoàn thành.' : 'chưa hoàn thành.');
+                },
+                removeTask(id) {
+                    const task = this.tasks.find(item => item.id === id);
+                    if (!task) return;
+                    this.tasks = this.tasks.filter(item => item.id !== id);
+                    this.notice = 'Đã xóa “' + task.name + '”.';
+                },
+                clearCompleted() {
+                    const count = this.completedTasks;
+                    if (count === 0) return;
+                    this.tasks = this.tasks.filter(task => !task.completed);
+                    this.notice = 'Đã xóa ' + count + ' công việc đã hoàn thành.';
+                }
+            }
+        });
+        taskApp.mount('#app');
+    </script>
+</body>
+</html>
