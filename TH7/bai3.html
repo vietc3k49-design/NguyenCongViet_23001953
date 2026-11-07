@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Bài 3 — Giỏ hàng với props và $emit</title>
+    <style>
+        * { box-sizing: border-box; }
+        [v-cloak] { display: none; }
+        body { margin: 0; background: #f3f6fb; color: #20304a; font: 16px/1.6 system-ui, sans-serif; }
+        main { width: min(100% - 32px, 1060px); margin: 32px auto; }
+        nav { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 26px; }
+        a { color: #245bb2; text-underline-offset: 3px; }
+        a[aria-current="page"] { font-weight: 700; }
+        .eyebrow { margin: 0 0 6px; color: #53647c; font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+        h1 { margin: 0; font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.25; }
+        .lead { margin: 12px 0 24px; color: #53647c; }
+        .panel { background: white; border: 1px solid #dbe3ef; border-radius: 14px; padding: 24px; }
+        .help, .unit-price, .product-id { color: #53647c; }
+        .help { margin: 0 0 8px; font-size: .9rem; }
+        .cart-list { margin: 0; padding: 0; list-style: none; }
+        .cart-item { display: grid; grid-template-columns: minmax(0, 1fr) 210px 155px auto; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid #e1e7f0; }
+        .product-info, .quantity-field { min-width: 0; }
+        h2 { margin: 0 0 6px; font-size: 1.1rem; overflow-wrap: anywhere; }
+        .unit-price, .product-id { margin: 0; font-size: .9rem; }
+        .product-id { font-size: .8rem; }
+        .quantity-field label, .subtotal-field > span { display: block; margin-bottom: 6px; font-size: .9rem; color: #53647c; }
+        .quantity-controls { display: flex; gap: 8px; align-items: center; }
+        button, input { font: inherit; }
+        button { border: 1px solid #245bb2; border-radius: 7px; padding: 8px 14px; background: #245bb2; color: white; cursor: pointer; }
+        .secondary { color: #245bb2; background: white; }
+        .secondary:hover:not(:disabled) { background: #edf3ff; }
+        .quantity-controls button { width: 42px; flex-shrink: 0; padding-inline: 0; }
+        button:disabled { border-color: #dbe3ef; color: #66758b; background: #edf0f5; cursor: not-allowed; }
+        .quantity-input { width: 78px; min-width: 0; border: 1px solid #aab9cc; border-radius: 7px; padding: 8px 5px; background: white; color: #20304a; text-align: center; }
+        .quantity-input[aria-invalid="true"] { border-color: #a12b35; }
+        .danger { border-color: #e0b2b8; color: #a12b35; background: white; }
+        .danger:hover { background: #fff0f1; }
+        .subtotal-field { text-align: right; }
+        .subtotal { display: block; overflow-wrap: anywhere; }
+        :focus-visible { outline: 3px solid #89aff1; outline-offset: 3px; }
+        .error { color: #a12b35; font-size: .9rem; margin: 8px 0 0; overflow-wrap: anywhere; }
+        .notice { color: #17613b; background: #e5f5ec; border-radius: 7px; font-size: .9rem; padding: 10px 14px; margin: 16px 0 0; overflow-wrap: anywhere; }
+        .summary { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; margin-top: 24px; padding: 18px; border-radius: 8px; background: #f3f6fb; }
+        .summary p { margin: 0; }
+        .total-money { color: #245bb2; font-size: 1.2rem; }
+        .empty { text-align: center; padding: 36px 16px; color: #53647c; }
+        .empty h2 { color: #20304a; font-size: 1.3rem; }
+        .empty p { margin: 8px 0 0; }
+        footer { margin-top: 24px; color: #53647c; font-size: .85rem; }
+        @media (max-width: 800px) {
+            .cart-item { grid-template-columns: minmax(0, 1fr) auto; gap: 16px; }
+            .quantity-field { grid-column: 1; grid-row: 2; }
+            .subtotal-field { grid-column: 2; grid-row: 2; }
+            .remove { grid-column: 2; grid-row: 1; }
+        }
+        @media (max-width: 420px) {
+            main { margin-top: 22px; }
+            .panel { padding: 18px; }
+            .cart-item { grid-template-columns: minmax(0, 1fr); }
+            .quantity-field, .subtotal-field, .remove { grid-column: auto; grid-row: auto; }
+            .subtotal-field { text-align: left; }
+            .remove { justify-self: start; }
+            .summary { display: block; }
+            .summary p + p { margin-top: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <nav aria-label="Bài thực hành tuần 7">
+            <a href="bai1.html">Bài 1 · Danh sách sản phẩm</a>
+            <a href="bai2.html">Bài 2 · Component</a>
+            <a href="bai3.html" aria-current="page">Bài 3 · Giỏ hàng</a>
+        </nav>
+        <header>
+            <p class="eyebrow">Thực hành tuần 7 · Vue 3 · Bài 3</p>
+            <h1>Giỏ hàng</h1>
+            <p class="lead">Điều chỉnh số lượng, xóa sản phẩm và theo dõi tổng tiền giỏ hàng.</p>
+        </header>
+
+        <div id="app" class="panel" v-cloak>
+            <p class="help" id="quantity-help">Số lượng từ 1 đến 99. Nhập số rồi nhấn Enter hoặc rời ô để cập nhật.</p>
+            <ul v-if="cartItems.length" class="cart-list" aria-label="Sản phẩm trong giỏ">
+                <!-- Cha sở hữu mảng, con chỉ nhận props và gửi yêu cầu bằng sự kiện. -->
+                <dong-gio-hang v-for="item in cartItems" :key="item.id" :data-id="item.id"
+                    :id="item.id" :ten="item.name" :don-gia="item.price" :so-luong="item.quantity"
+                    @doi-so-luong="doiSoLuong" @yeu-cau-xoa="xoaSanPham">
+                </dong-gio-hang>
+            </ul>
+            <div v-else class="empty" role="status">
+                <h2>Giỏ hàng trống</h2>
+                <p>Không còn sản phẩm nào trong giỏ.</p>
+            </div>
+            <p v-if="error" class="error parent-error" role="alert">{{ error }}</p>
+            <p v-if="notice" class="notice" role="status">{{ notice }}</p>
+            <!-- Hai tổng đều là computed của cha, luôn hiển thị cả khi giỏ rỗng. -->
+            <div class="summary" aria-live="polite" aria-atomic="true">
+                <p>Tổng số lượng: <strong id="total-quantity">{{ totalQuantity }}</strong></p>
+                <p>Tổng tiền: <strong id="total-money" class="total-money">{{ formatMoney(totalMoney) }}</strong></p>
+            </div>
+        </div>
+        <noscript><p>Vui lòng bật JavaScript để sử dụng bài thực hành.</p></noscript>
+        <footer>Nguyễn Công Việt — 23001953 · Giỏ hàng lưu trong phiên mở trang; tải lại trang để khôi phục dữ liệu mẫu.</footer>
+    </main>
+
+    <script src="assets/vue.global.prod.js"></script>
+    <script src="components/DongGioHang.js"></script>
+    <script>
+        const cartApp = Vue.createApp({
+            data() {
+                return {
+                    // Đúng tình huống kiểm tra của đề: 5 sản phẩm, tổng 46.000 đồng.
+                    cartItems: [
+                        { id: 1, name: 'Bút bi Thiên Long', price: 5000, quantity: 2 },
+                        { id: 2, name: 'Vở ô ly 200 trang', price: 12000, quantity: 3 }
+                    ],
+                    error: '',
+                    notice: ''
+                };
+            },
+            computed: {
+                totalQuantity() {
+                    return this.cartItems.reduce((total, item) => total + item.quantity, 0);
+                },
+                totalMoney() {
+                    return this.cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+                }
+            },
+            methods: {
+                formatMoney(value) {
+                    return value.toLocaleString('vi-VN', { maximumFractionDigits: 2 }) + ' ₫';
+                },
+                doiSoLuong(id, soLuongMoi) {
+                    this.error = '';
+                    this.notice = '';
+                    if (!Number.isSafeInteger(id) || id <= 0) {
+                        this.error = 'Mã sản phẩm không hợp lệ.';
+                        return;
+                    }
+                    if (!Number.isInteger(soLuongMoi) || soLuongMoi < 1 || soLuongMoi > 99) {
+                        this.error = 'Số lượng phải là số nguyên từ 1 đến 99.';
+                        return;
+                    }
+                    const item = this.cartItems.find(item => item.id === id);
+                    if (!item) {
+                        this.error = 'Sản phẩm không còn trong giỏ hàng.';
+                        return;
+                    }
+                    // Mọi thay đổi dữ liệu diễn ra ở cha, chỉ cập nhật đúng ID.
+                    this.cartItems = this.cartItems.map(item => item.id === id
+                        ? { ...item, quantity: soLuongMoi }
+                        : item);
+                },
+                xoaSanPham(id) {
+                    this.error = '';
+                    this.notice = '';
+                    if (!Number.isSafeInteger(id) || id <= 0) {
+                        this.error = 'Mã sản phẩm không hợp lệ.';
+                        return;
+                    }
+                    const item = this.cartItems.find(item => item.id === id);
+                    if (!item) {
+                        this.error = 'Sản phẩm không còn trong giỏ hàng.';
+                        return;
+                    }
+                    this.cartItems = this.cartItems.filter(item => item.id !== id);
+                    this.notice = 'Đã xóa “' + item.name + '”.';
+                }
+            }
+        });
+        cartApp.component('dong-gio-hang', DongGioHang);
+        cartApp.mount('#app');
+    </script>
+</body>
+</html>

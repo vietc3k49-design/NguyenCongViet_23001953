@@ -86,6 +86,17 @@ Các điểm kiểm tra dữ liệu và truy cập:
 
 Mở `TH6/index.html` trực tiếp bằng trình duyệt hoặc **http://localhost/web/TH6/** khi chạy Apache. Vue 3 và ảnh được lưu trong `TH6/assets/`, hoạt động offline; không cần MySQL hoặc bước build.
 
+### TH7 — Vue 3: quản lý sản phẩm, component và sự kiện
+
+- [bai1.html](./TH7/bai1.html): tìm kiếm, lọc, sắp xếp, thêm/xóa sản phẩm và thống kê tồn kho bằng computed; watch và mounted.
+- [bai2.html](./TH7/bai2.html): component sản phẩm với props, mô tả độc lập và khóa mua khi hết hàng.
+- [bai3.html](./TH7/bai3.html): giỏ hàng dùng props và `$emit`, kiểm tra số lượng 1–99, tổng số lượng/tổng tiền và trạng thái giỏ trống.
+- [Hướng dẫn và đối chiếu yêu cầu](./TH7/README.md): cách test từng bài, trường hợp biên và kết quả kiểm tra.
+
+Đã đối chiếu đủ **26/26 yêu cầu**. Lượt rà soát cuối ngày **07/11/2026** đạt **465/465 kiểm tra trên Chromium**, gồm chức năng, validation, sự kiện, offline và bố cục 320–1440 px. Giỏ mẫu bài 3 có tổng số lượng **5**, tổng tiền **46.000đ**.
+
+Mở từng file HTML trực tiếp hoặc **http://localhost/web/TH7/bai1.html** (tương tự bài 2, 3). Không cần MySQL/npm/build. Nộp kèm `components/` và `assets/`; tải lại trang khôi phục dữ liệu mẫu. PDF đề đã được bỏ khỏi bản nộp.
+
 ## Hướng dẫn chạy
 
 ### TH1 và TH2
