@@ -1,4 +1,4 @@
-﻿# BÀI TẬP THỰC HÀNH MÔN PHÁT TRIỂN ỨNG DỤNG WEB
+# BÀI TẬP THỰC HÀNH MÔN PHÁT TRIỂN ỨNG DỤNG WEB
 
 - **Sinh viên:** Nguyễn Công Việt
 - **Mã sinh viên:** 23001953
@@ -97,6 +97,16 @@ Mở `TH6/index.html` trực tiếp bằng trình duyệt hoặc **http://localh
 
 Mở từng file HTML trực tiếp hoặc **http://localhost/web/TH7/bai1.html** (tương tự bài 2, 3). Không cần MySQL/npm/build. Nộp kèm `components/` và `assets/`; tải lại trang khôi phục dữ liệu mẫu. PDF đề đã được bỏ khỏi bản nộp.
 
+### TH8 — API PHP và Vue.js
+
+- [database.sql](./TH8/database.sql): khởi tạo database `th8_products` (`utf8mb4_unicode_ci`), bảng `products` (`id`, `name`, `price`, `stock`) và 3 dòng mẫu (`Bút bi`, `Vở ô ly`, `Thước kẻ`).
+- [common/dbConnect.php](./TH8/common/dbConnect.php) & [model/product.php](./TH8/model/product.php): kết nối PDO (`strict sql_mode`, tắt emulate prepares) và 5 hàm truy vấn dùng prepared statements.
+- [api/products.php](./TH8/api/products.php): REST API JSON (`GET`, `POST`, `PUT ?id=...`, `DELETE ?id=...`), validate `name` (trim 1–100 ký tự UTF-8), `price` nguyên `> 0`, `stock` nguyên `>= 0` trước khi ghi MySQL.
+- [index.html](./TH8/index.html): giao diện Vue 3 Options API cục bộ (`assets/vue.global.prod.js`), gọi API qua `fetch`, bảng `v-for`, form `v-model` cho thêm/sửa, xác nhận xóa `DELETE`, cập nhật bảng không tải lại trang và hiển thị lỗi từ API.
+- [Hướng dẫn riêng](./TH8/README.md): cấu trúc, cài đặt và bảng đối chiếu Câu 1–4.
+
+Đã kiểm tra độc lập từng phần bằng subagent (Gemini 3.8 Flash High) ngày **12/11/2026**: Câu 1 đạt `TC01–TC12` trên MariaDB `10.4.32`, Câu 2 đạt `API-01–API-13` qua HTTP thực tế, và Câu 3–4 đạt `UI-01–UI-07` (`5/5` mục Câu 3, `4/4` tình huống Câu 4) trên Chromium qua Playwright Core (offline Vue 3.5.22, không tràn ngang `320–1440 px`, `0` request ngoài).
+
 ## Hướng dẫn chạy
 
 ### TH1 và TH2
@@ -129,6 +139,12 @@ php -S localhost:8000 -t TH4/app
 ```
 
 Sau đó mở **http://localhost:8000/**. MySQL vẫn cần chạy.
+
+### TH8
+
+1. Bật **Apache** và **MySQL** trong XAMPP.
+2. Mở `http://localhost/phpmyadmin/`, nhập [TH8/database.sql](./TH8/database.sql) để tạo database riêng `th8_products` (không ảnh hưởng tới `shopping_cart` của TH4).
+3. Mở **http://localhost/web/TH8/** (hoặc chạy `php -S localhost:8000 -t TH8` từ gốc dự án rồi mở **http://localhost:8000/**; MySQL vẫn cần chạy).
 
 ### Database và tài khoản mẫu
 
