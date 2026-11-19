@@ -107,6 +107,17 @@ Mở từng file HTML trực tiếp hoặc **http://localhost/web/TH7/bai1.html*
 
 Đã kiểm tra độc lập từng phần bằng subagent (Gemini 3.8 Flash High) ngày **12/11/2026**: Câu 1 đạt `TC01–TC12` trên MariaDB `10.4.32`, Câu 2 đạt `API-01–API-13` qua HTTP thực tế, và Câu 3–4 đạt `UI-01–UI-07` (`5/5` mục Câu 3, `4/4` tình huống Câu 4) trên Chromium qua Playwright Core (offline Vue 3.5.22, không tràn ngang `320–1440 px`, `0` request ngoài).
 
+### TH9 — Upload ảnh sản phẩm và Phân trang (PHP API & Vue.js)
+
+- [database.sql](./TH9/database.sql): khởi tạo database riêng `th9_products` (`utf8mb4_unicode_ci`), bảng `products` bổ sung cột `image VARCHAR(255) NULL` và 12 sản phẩm mẫu.
+- [common/dbConnect.php](./TH9/common/dbConnect.php) & [model/product.php](./TH9/model/product.php): kết nối PDO (`strict sql_mode`, tắt emulate prepares) và các hàm truy vấn phân trang (`ORDER BY id DESC LIMIT/OFFSET`), cập nhật cột `image` và giữ ảnh hiện tại khi sửa thông tin.
+- [api/products.php](./TH9/api/products.php): REST API JSON hỗ trợ phân trang `GET ?page=1&limit=5` (trả `data` và `pagination`: `page`, `limit`, `total`, `total_pages`; tự lùi về trang cuối nếu `page` vượt quá, báo lỗi `400` khi tham số sai), `POST` trả `id` mới, `PUT ?id=...` giữ nguyên cột `image`, `DELETE ?id=...` xóa cả tệp ảnh đính kèm nếu có.
+- [api/upload.php](./TH9/api/upload.php): API `POST` nhận `multipart/form-data` (`product_id`, `image`), kiểm tra sản phẩm tồn tại, đuôi tệp (`jpg`, `jpeg`, `png`), MIME thực tế (`finfo`), cấu trúc ảnh (`getimagesize`) và dung lượng `<= 2 MB`, lưu vào `uploads/` với tên duy nhất và chỉ thay đường dẫn ảnh cũ khi thành công.
+- [index.html](./TH9/index.html): giao diện Vue 3 Options API cục bộ (`assets/vue.global.prod.js`), chọn và xem trước ảnh, hiển thị thumbnail trong bảng (hoặc `Chưa có ảnh`), xử lý lỗi upload kèm nút `Thử lại upload` mà không làm mất thông tin sản phẩm, và điều hướng phân trang `Trước` / `Sau` không tải lại trang.
+- [Hướng dẫn riêng](./TH9/README.md): cấu trúc, cài đặt và bảng đối chiếu Câu 1–2.
+
+Đã kiểm tra độc lập bằng các subagent QA ngày **19/11/2026**: database (`MariaDB 10.4.32`), HTTP API (`18/18` tình huống `api/products.php`, `13/13` tình huống `api/upload.php`), và E2E trên Chromium qua Playwright Core (`10/10` kịch bản: phân trang, upload PNG hợp lệ, từ chối tệp sai loại/`> 2 MB`, thử lại khi upload lỗi, giữ ảnh cũ khi sửa, xóa mục cuối trang cuối, trạng thái rỗng, responsive `320–1440 px`, `0` request ngoài).
+
 ## Hướng dẫn chạy
 
 ### TH1 và TH2
@@ -145,6 +156,13 @@ Sau đó mở **http://localhost:8000/**. MySQL vẫn cần chạy.
 1. Bật **Apache** và **MySQL** trong XAMPP.
 2. Mở `http://localhost/phpmyadmin/`, nhập [TH8/database.sql](./TH8/database.sql) để tạo database riêng `th8_products` (không ảnh hưởng tới `shopping_cart` của TH4).
 3. Mở **http://localhost/web/TH8/** (hoặc chạy `php -S localhost:8000 -t TH8` từ gốc dự án rồi mở **http://localhost:8000/**; MySQL vẫn cần chạy).
+
+### TH9
+
+1. Bật **Apache** và **MySQL** trong XAMPP.
+2. Mở `http://localhost/phpmyadmin/`, nhập [TH9/database.sql](./TH9/database.sql) để tạo database riêng `th9_products` với 12 sản phẩm mẫu (không ảnh hưởng tới `shopping_cart` của TH4 hoặc `th8_products` của TH8).
+3. Đảm bảo thư mục `TH9/uploads/` có quyền ghi cho PHP/Apache.
+4. Mở **http://localhost/web/TH9/** (hoặc chạy `php -S localhost:8000 -t TH9` từ gốc dự án rồi mở **http://localhost:8000/**; MySQL vẫn cần chạy).
 
 ### Database và tài khoản mẫu
 
