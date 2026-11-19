@@ -109,7 +109,7 @@ Mở từng file HTML trực tiếp hoặc **http://localhost/web/TH7/bai1.html*
 
 ### TH9 — Upload ảnh sản phẩm và Phân trang (PHP API & Vue.js)
 
-- [database.sql](./TH9/database.sql): khởi tạo database riêng `th9_products` (`utf8mb4_unicode_ci`), bảng `products` bổ sung cột `image VARCHAR(255) NULL` và 12 sản phẩm mẫu.
+- [database.sql](./TH9/database.sql): khởi tạo database riêng `th9_products` (`utf8mb4_unicode_ci`), bảng `products` bổ sung cột `image VARCHAR(255) NULL` và 12 sản phẩm mẫu kèm ảnh minh họa trong `TH9/uploads/`.
 - [common/dbConnect.php](./TH9/common/dbConnect.php) & [model/product.php](./TH9/model/product.php): kết nối PDO (`strict sql_mode`, tắt emulate prepares) và các hàm truy vấn phân trang (`ORDER BY id DESC LIMIT/OFFSET`), cập nhật cột `image` và giữ ảnh hiện tại khi sửa thông tin.
 - [api/products.php](./TH9/api/products.php): REST API JSON hỗ trợ phân trang `GET ?page=1&limit=5` (trả `data` và `pagination`: `page`, `limit`, `total`, `total_pages`; tự lùi về trang cuối nếu `page` vượt quá, báo lỗi `400` khi tham số sai), `POST` trả `id` mới, `PUT ?id=...` giữ nguyên cột `image`, `DELETE ?id=...` xóa cả tệp ảnh đính kèm nếu có.
 - [api/upload.php](./TH9/api/upload.php): API `POST` nhận `multipart/form-data` (`product_id`, `image`), kiểm tra sản phẩm tồn tại, đuôi tệp (`jpg`, `jpeg`, `png`), MIME thực tế (`finfo`), cấu trúc ảnh (`getimagesize`) và dung lượng `<= 2 MB`, lưu vào `uploads/` với tên duy nhất và chỉ thay đường dẫn ảnh cũ khi thành công.

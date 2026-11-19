@@ -9,7 +9,7 @@ Sinh viên: Nguyễn Công Việt — 23001953.
 - `model/product.php`: các hàm truy vấn `products` có phân trang (`page`, `limit`), tổng số bản ghi, lấy theo ID, thêm, sửa, cập nhật cột `image` và xóa sản phẩm bằng PDO prepared statements.
 - `api/products.php`: REST API JSON hỗ trợ `GET ?page=&limit=`, `POST`, `PUT ?id=...`, `DELETE ?id=...` và trả metadata `pagination` (`page`, `limit`, `total`, `total_pages`).
 - `api/upload.php`: endpoint `POST` nhận `FormData` (`product_id`, `image`), kiểm tra định dạng JPG/JPEG/PNG và dung lượng tối đa 2 MB, lưu ảnh vào `uploads/` và cập nhật cột `image`.
-- `uploads/.gitkeep`: giữ thư mục lưu ảnh tải lên trong Git.
+- `uploads/`: chứa `.gitkeep` và 12 ảnh sản phẩm mẫu (`product_1_*.jpg`..`product_12_*.jpg`) khớp với `database.sql`.
 - `index.html`: giao diện Vue 3 (Options API) dùng offline, hỗ trợ thêm/sửa/xóa, chọn và xem trước ảnh (`URL.createObjectURL`), giữ ảnh hiện tại khi sửa, xử lý lỗi upload kèm nút `Thử lại upload`, và điều hướng phân trang không tải lại trang.
 - `assets/vue.global.prod.js`, `assets/VUE-LICENSE.txt`: Vue 3.5.22 dùng nội bộ offline (không phụ thuộc CDN).
 
